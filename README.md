@@ -15,7 +15,7 @@
 ## A carreira em um git log
 
 <div align="center">
-  <img src="assets/carreira.svg" width="840" alt="git log da carreira: bacharelado em Engenharia de Software na UnB; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD para ambientes internos e externos; infraestrutura para grandes clientes; mestrado no PESC (COPPE/UFRJ); certificações AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes" />
+  <img src="assets/carreira.svg" width="840" alt="git log da carreira: bacharelado em Engenharia de Software na UnB; intercâmbio na Auckland University of Technology; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD para ambientes internos e externos; infraestrutura para grandes clientes; mestrado no PESC (COPPE/UFRJ); certificações AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes" />
 </div>
 
 A história começa na Universidade de Brasília, onde me formei bacharel em Engenharia de Software e trabalhei no Software Público Brasileiro, empacotando sistemas para Red Hat. De lá pra cá vieram pipelines de CI/CD para ambientes internos e externos, o mestrado em Engenharia de Sistemas e Computação no PESC (COPPE/UFRJ) e a gestão de infraestrutura para clientes de peso:

@@ -181,7 +181,7 @@ function header() {
 // 2. carreira.svg — a carreira como um git log
 // ════════════════════════════════════════════════════════════════════════
 function carreira() {
-  const W = 840, H = 352, X = 36;
+  const W = 840, X = 36;
   const FS = 15, CW = FS * 0.602;
   maskSeq = 100;
 
@@ -191,6 +191,7 @@ function carreira() {
   // cada linha: [hash, refs (ou null), mensagem]
   const linhas = [
     ['ba5e013', ['tag: unb', C.pink], 'bacharelado em Engenharia de Software · UnB'],
+    ['acade14', null, 'intercâmbio na Auckland University of Technology · NZ'],
     ['5bda7f3', ['tag: spb', C.pink], 'Software Público Brasileiro · empacotamento p/ Red Hat'],
     ['c1cd0e5', null, 'pipelines de CI/CD para ambientes internos e externos'],
     ['1afa9c2', null, 'infraestrutura p/ Icatu, Nubank, Odontoprev, Carrefour, BMW...'],
@@ -222,9 +223,10 @@ function carreira() {
   });
 
   const fimY = y + 10;
+  const H = fimY + 37;
   const cursorBegin = (t.end + 0.25 + linhas.length * 0.28 + 0.3).toFixed(2);
 
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="git log da carreira: Bacharelado em Engenharia de Software na UnB; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD; infraestrutura para grandes clientes; Mestrado no PESC COPPE/UFRJ; certificações Azure AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes.">
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="git log da carreira: bacharelado em Engenharia de Software na UnB; intercâmbio na Auckland University of Technology; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD; infraestrutura para grandes clientes; mestrado no PESC (COPPE/UFRJ); certificações Azure AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes.">
   <defs>
     ${borderGrad('carBorder')}
     ${t.mask}
