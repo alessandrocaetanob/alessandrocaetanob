@@ -1,68 +1,74 @@
-<p align="center">
-  <img src="assets/header.svg" alt="Terminal animado: Alessandro Caetano Beltrão, Cloud & Infrastructure Engineer" width="820" />
-</p>
+<div align="center">
+  <img src="assets/header.svg" width="840" alt="Terminal animado apresentando Alessandro Caetano Beltrão, Cloud &amp; Infrastructure Engineer, com foco em IA, DevOps, Kubernetes e Azure" />
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&duration=3200&pause=900&color=B794F4&center=true&vCenter=true&width=560&lines=Especialista+em+Azure+e+Kubernetes;Automatizando+infraestrutura+com+carinho;Construindo+o+Smooth+Operator" alt="Typing SVG" />
-</p>
+  <p>
+    <a href="mailto:alessandro@hyperius.io"><img src="assets/badge-email.svg" alt="E-mail" /></a>
+    <a href="https://www.linkedin.com/in/alessandrocb"><img src="assets/badge-linkedin.svg" alt="LinkedIn" /></a>
+    <a href="https://scholar.google.com/citations?user=j656kewAAAAJ"><img src="assets/badge-scholar.svg" alt="Google Scholar" /></a>
+  </p>
 
----
+  <p>Nuvem, clusters e pipelines com capricho de terminal.</p>
 
-### Tecnologias e Ferramentas
+  <img src="assets/divisor.svg" width="840" alt="" />
+</div>
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=azure,kubernetes,docker,cs,dotnet,python,powershell,postgres,terraform,githubactions,linux,cloudflare&perline=6" alt="Tech stack" />
-</p>
+## A carreira em um git log
+
+<div align="center">
+  <img src="assets/carreira.svg" width="840" alt="git log da carreira: Bacharelado em Engenharia de Software na UnB; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD para ambientes internos e externos; infraestrutura para grandes clientes; Mestrado no PESC, COPPE/UFRJ; certificações AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes" />
+</div>
+
+A história começa na Universidade de Brasília, onde me formei Bacharel em Engenharia de Software e trabalhei no Software Público Brasileiro, empacotando sistemas para Red Hat. De lá pra cá vieram pipelines de CI/CD para ambientes internos e externos, o Mestrado em Engenharia de Sistemas e Computação no PESC (COPPE/UFRJ) e a gestão de infraestrutura para clientes de peso:
+
+<div align="center">
+  <img src="assets/clientes.svg" width="840" alt="Letreiro com os clientes atendidos: Icatu Seguros, Nubank, Odontoprev, CNseg, Movida, Carrefour, BMW, Inbenta, Caixa Capitalização, Prudential e Firjan" />
+  <sub>Icatu Seguros · Nubank · Odontoprev · CNseg · Movida · Carrefour · BMW · Inbenta · Caixa Capitalização · Prudential · Firjan</sub>
+</div>
+
+## Certificações Microsoft
+
+<div align="center">
+  <img src="assets/certificacoes.svg" width="840" alt="Quatro certificações Microsoft: AZ-104 Azure Administrator Associate, AZ-204 Azure Developer Associate, AZ-305 Solutions Architect Expert e AZ-400 DevOps Engineer Expert" />
+</div>
+
+Quatro certificações do ecossistema Azure: [AZ-104](https://learn.microsoft.com/pt-br/credentials/certifications/azure-administrator/) e [AZ-204](https://learn.microsoft.com/pt-br/credentials/certifications/azure-developer/) no nível Associate, [AZ-305](https://learn.microsoft.com/pt-br/credentials/certifications/azure-solutions-architect/) e [AZ-400](https://learn.microsoft.com/pt-br/credentials/certifications/devops-engineer/) no nível Expert.
+
+## Pesquisa e publicações
+
+Mestre em Engenharia de Sistemas e Computação pelo PESC (COPPE/UFRJ), com pesquisa em DevOps, entrega contínua e orquestração de containers.
+
+- 2022 · [A Low-Cost Continuous Development Architecture Based on Container Orchestration](https://pesc.coppe.ufrj.br/uploadfile/publicacao/3072.pdf) · dissertação de mestrado, PESC/COPPE/UFRJ
+- 2020 · [Performance Evaluation of Kubernetes as Deployment Platform for IoT Devices](https://cibse2020.ppgia.pucpr.br/images/artigos/3/S03_P2.pdf) · CIbSE
+- 2020 · [Technical Debt: A Clean Architecture Implementation](https://sol.sbc.org.br/index.php/cbsoft_estendido/article/view/14620) · CBSoft
+- 2018 · [On the Benefits and Challenges of Using Kanban in Software Engineering: a Structured Synthesis Study](https://link.springer.com/article/10.1186/s40411-018-0057-1) · JSERD
+- 2018 · [Using PageRank to Reveal Relevant Issues to Support Decision-Making on Open Source Projects](https://link.springer.com/chapter/10.1007/978-3-319-92375-8_9) · OSS, IFIP
+
+A lista completa está no [Google Scholar](https://scholar.google.com/citations?user=j656kewAAAAJ).
+
+<!-- ORCID: quando criar o perfil, adicionar o link aqui -->
+
+## Stack do dia a dia
 
 - **Cloud:** Azure (AKS, Entra ID, DevOps, Functions, Container Apps)
-- **Infra e DevOps:** Kubernetes, Traefik/ingress-nginx, CI/CD, IaC
-- **Redes e Segurança:** FortiGate, Zero Trust, Tailscale
+- **Infra e DevOps:** Kubernetes, Traefik e ingress-nginx, CI/CD, IaC
+- **Redes e segurança:** FortiGate, Zero Trust, Tailscale
 - **Automação:** N8N, PowerShell, integrações com Microsoft Graph
 
-### Clientes e Projetos
+## Na bancada
 
-Ao longo da carreira, atuei em projetos de infraestrutura, cloud e integração para empresas como:
+**[Smooth Operator](https://github.com/alessandrocaetanob/smooth-operator)**: cofre cloud-native e clientless para gerenciar conexões remotas (RDP, SSH e VNC) direto do navegador, com RBAC, MFA via TOTP, OIDC/SAML e transferência de arquivos em sessão.
 
-Icatu Seguros, CNSeg, Nubank, Votorantim, Kard Bank, Grupo Ultra, Odontoprev, Carrefour e Firjan.
+## O fliperama das contribuições
 
-### Projeto em destaque
-
-**[Smooth Operator](https://github.com/alessandrocaetanob/smooth-operator)**: aplicação cloud-native que funciona como um cofre centralizado e clientless para gerenciamento de conexões remotas (RDP, SSH, VNC), com transferência de arquivos em sessão via SFTP/RDP.
-
----
-
-### Estatísticas
-
-<p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=alessandrocaetanob&theme=tokyonight" alt="Estatísticas do GitHub" height="180" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=alessandrocaetanob&theme=tokyonight" alt="Linguagens mais usadas" height="180" />
-</p>
-
-<p align="center">
-  <img src="https://streak-stats.demolab.com/?user=alessandrocaetanob&background=1B1B2F&border=7D56F4&ring=FF6AC1&fire=FF6AC1&currStreakNum=E8E6F5&sideNums=B794F4&currStreakLabel=FF6AC1&sideLabels=B794F4&dates=8886A8&locale=pt_BR" alt="Sequência de contribuições" />
-</p>
-
-<p align="center">
+<div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph.svg">
-    <img alt="Pac-Man comendo as contribuições" src="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph.svg">
+    <img alt="Pac-Man comendo as contribuições do ano" src="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph.svg">
   </picture>
-</p>
+</div>
 
----
-
-### Contato
-
-<p align="center">
-  <a href="mailto:alessandro@hyperius.io">
-    <img src="https://img.shields.io/badge/Email-alessandro%40hyperius.io-F25D94?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
-  </a>
-  <a href="https://www.linkedin.com/in/SEU-LINKEDIN-AQUI">
-    <img src="https://img.shields.io/badge/LinkedIn-Alessandro%20Caetano-7D56F4?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=alessandrocaetanob&color=FF6AC1&style=flat-square&label=Visitas" alt="Contador de visitas" />
-</p>
+<div align="center">
+  <img src="assets/divisor.svg" width="840" alt="" />
+  <sub><code>$ exit</code> · sessão encerrada, até a próxima o/</sub>
+</div>

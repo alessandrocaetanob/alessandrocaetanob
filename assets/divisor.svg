@@ -1,0 +1,21 @@
+<svg width="840" height="10" viewBox="0 0 840 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="divGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5F87"/>
+      <stop offset="50%" stop-color="#6B50FF"/>
+      <stop offset="100%" stop-color="#00FFB2"/>
+    </linearGradient>
+    <linearGradient id="brilho" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="divClip"><rect x="0" y="3" width="840" height="4" rx="2"/></clipPath>
+  </defs>
+  <rect x="0" y="3" width="840" height="4" rx="2" fill="url(#divGrad)"/>
+  <g clip-path="url(#divClip)">
+    <rect x="-160" y="3" width="150" height="4" fill="url(#brilho)">
+      <animate attributeName="x" values="-160;860;860" keyTimes="0;0.45;1" dur="6s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>
