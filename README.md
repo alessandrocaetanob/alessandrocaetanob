@@ -28,7 +28,7 @@ A história começa na Universidade de Brasília, onde me formei bacharel em Eng
 ## Certificações Microsoft
 
 <div align="center">
-  <img src="assets/certificacoes.svg" width="840" alt="Quatro certificações Microsoft: AZ-104 Azure Administrator Associate, AZ-204 Azure Developer Associate, AZ-305 Solutions Architect Expert e AZ-400 DevOps Engineer Expert" />
+  <img src="assets/certificacoes.svg" width="840" alt="Quatro certificações Microsoft: AZ-104 Azure Administrator Associate, AZ-204 Azure Developer Associate, AZ-305 Azure Solutions Architect Expert e AZ-400 DevOps Engineer Expert" />
 </div>
 
 Quatro certificações do ecossistema Azure: [AZ-104](https://learn.microsoft.com/pt-br/credentials/certifications/azure-administrator/) e [AZ-204](https://learn.microsoft.com/pt-br/credentials/certifications/azure-developer/) no nível Associate, [AZ-305](https://learn.microsoft.com/pt-br/credentials/certifications/azure-solutions-architect/) e [AZ-400](https://learn.microsoft.com/pt-br/credentials/certifications/devops-engineer/) no nível Expert.

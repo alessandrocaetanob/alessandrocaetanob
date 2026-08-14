@@ -6,6 +6,7 @@
     <style>
       .fila { animation: rolar 37s linear infinite; }
       @keyframes rolar { from { transform: translateX(0); } to { transform: translateX(-1271px); } }
+      @media (prefers-reduced-motion: reduce) { .fila { animation: none; } }
     </style>
   </defs>
   <rect x="3" y="3" width="834" height="58" rx="12" fill="#201F26" stroke="#3A3943" stroke-width="1.5"/>
