@@ -18,7 +18,7 @@
     <text x="36" y="89" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="17" fill="#00FFB2">$ <tspan fill="#FFFAF1">git log --reverse --oneline carreira</tspan></text>
   </g>
   <g opacity="0">
-    <text x="36" y="116" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">ba5e013</tspan> <tspan fill="#858392">(</tspan><tspan fill="#FF5F87">tag: unb</tspan><tspan fill="#858392">) </tspan><tspan fill="#FFFAF1">Bacharelado em Engenharia de Software · UnB</tspan></text>
+    <text x="36" y="116" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">ba5e013</tspan> <tspan fill="#858392">(</tspan><tspan fill="#FF5F87">tag: unb</tspan><tspan fill="#858392">) </tspan><tspan fill="#FFFAF1">bacharelado em Engenharia de Software · UnB</tspan></text>
     <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="2.33s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 7;0 0" dur="0.35s" begin="2.33s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
   </g>
   <g opacity="0">
@@ -30,11 +30,11 @@
     <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="2.89s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 7;0 0" dur="0.35s" begin="2.89s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
   </g>
   <g opacity="0">
-    <text x="36" y="197" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">1afa9c2</tspan> <tspan fill="#FFFAF1">infraestrutura p/ Icatu, Nubank, Odontoprev, Carrefour, BMW…</tspan></text>
+    <text x="36" y="197" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">1afa9c2</tspan> <tspan fill="#FFFAF1">infraestrutura p/ Icatu, Nubank, Odontoprev, Carrefour, BMW...</tspan></text>
     <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="3.17s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 7;0 0" dur="0.35s" begin="3.17s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
   </g>
   <g opacity="0">
-    <text x="36" y="224" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">c0ffee1</tspan> <tspan fill="#858392">(</tspan><tspan fill="#FF5F87">tag: coppe</tspan><tspan fill="#858392">) </tspan><tspan fill="#FFFAF1">Mestrado em Eng. de Sistemas e Computação · PESC/UFRJ</tspan></text>
+    <text x="36" y="224" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="15"><tspan fill="#7D56F4">*</tspan> <tspan fill="#FDD877">c0ffee1</tspan> <tspan fill="#858392">(</tspan><tspan fill="#FF5F87">tag: coppe</tspan><tspan fill="#858392">) </tspan><tspan fill="#FFFAF1">mestrado em Eng. de Sistemas e Computação · PESC/COPPE/UFRJ</tspan></text>
     <animate attributeName="opacity" from="0" to="1" dur="0.35s" begin="3.45s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 7;0 0" dur="0.35s" begin="3.45s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
   </g>
   <g opacity="0">
