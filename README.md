@@ -42,10 +42,12 @@ Icatu Seguros, CNSeg, Nubank, Votorantim, Kard Bank, Grupo Ultra, Odontoprev, Ca
   <img src="https://streak-stats.demolab.com/?user=alessandrocaetanob&background=1B1B2F&border=7D56F4&ring=FF6AC1&fire=FF6AC1&currStreakNum=E8E6F5&sideNums=B794F4&currStreakLabel=FF6AC1&sideLabels=B794F4&dates=8886A8&locale=pt_BR" alt="Sequência de contribuições" />
 </p>
 
-### A cobrinha
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/snake.svg" alt="Cobrinha comendo as contribuições" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph.svg">
+    <img alt="Pac-Man comendo as contribuições" src="https://raw.githubusercontent.com/alessandrocaetanob/alessandrocaetanob/output/pacman-contribution-graph.svg">
+  </picture>
 </p>
 
 ---
