@@ -1,0 +1,6 @@
+<svg width="134" height="34" viewBox="0 0 134 34" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LINKEDIN">
+  <rect x="1" y="1" width="132" height="32" rx="16" fill="#201F26" stroke="#00A4FF" stroke-width="1.6"/>
+  <rect x="15" y="9.5" width="16" height="16" rx="3.5" fill="none" stroke="#00A4FF" stroke-width="1.7"/>
+  <text x="23" y="22" text-anchor="middle" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="10.5" font-weight="bold" fill="#00A4FF">in</text>
+  <text x="42" y="21.5" font-family="'JetBrains Mono','Fira Code','Cascadia Code','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="12.5" letter-spacing="1.2" fill="#FFFAF1">LINKEDIN</text>
+</svg>
