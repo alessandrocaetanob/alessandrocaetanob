@@ -12,7 +12,7 @@
   <img src="assets/divisor.svg" width="840" alt="" />
 </div>
 
-## A carreira em um git log
+## Meu git log
 
 <div align="center">
   <img src="assets/carreira.svg" width="840" alt="git log da carreira: bacharelado em Engenharia de Software na UnB; intercâmbio na Auckland University of Technology; empacotamento para Red Hat no Software Público Brasileiro; pipelines de CI/CD para ambientes internos e externos; infraestrutura para grandes clientes; mestrado no PESC (COPPE/UFRJ); certificações AZ-104, AZ-204, AZ-305 e AZ-400; hoje: IA, DevOps e Kubernetes" />
@@ -25,7 +25,7 @@ A história começa na Universidade de Brasília, onde me formei bacharel em Eng
   <sub>Icatu Seguros · Nubank · Odontoprev · CNseg · Movida · Carrefour · BMW · Inbenta · Caixa Capitalização · Prudential · Firjan</sub>
 </div>
 
-## Certificações Microsoft
+## Certificações
 
 <div align="center">
   <img src="assets/certificacoes.svg" width="840" alt="Quatro certificações Microsoft: AZ-104 Azure Administrator Associate, AZ-204 Azure Developer Associate, AZ-305 Azure Solutions Architect Expert e AZ-400 DevOps Engineer Expert" />
@@ -47,7 +47,7 @@ A lista completa está no [Google Scholar](https://scholar.google.com/citations?
 
 <!-- ORCID: quando criar o perfil, adicionar o link aqui -->
 
-## Stack do dia a dia
+## Stack
 
 - **Cloud:** Azure (AKS, Entra ID, DevOps, Functions, Container Apps)
 - **Infra e DevOps:** Kubernetes, Traefik, ingress-nginx, CI/CD, IaC
@@ -58,7 +58,7 @@ A lista completa está no [Google Scholar](https://scholar.google.com/citations?
 
 **[Smooth Operator](https://github.com/alessandrocaetanob/smooth-operator)**: cofre cloud-native de acessos remotos (RDP, SSH e VNC) direto do navegador, sem cliente instalado, com RBAC, MFA via TOTP, OIDC/SAML e transferência de arquivos durante a sessão.
 
-## O fliperama das contribuições
+## Contribuições
 
 <div align="center">
   <picture>
