@@ -2,6 +2,8 @@
   <sub><b>PT-BR</b> · <a href="README.en.md">English</a></sub>
   <br><br>
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/header-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/header-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg">
     <img src="assets/light/header.svg" width="840" alt="Ficha de operador de Alessandro Caetano Beltrão, Cloud &amp; Infrastructure Engineer, com especialidade em IA, DevOps, Kubernetes e Azure, quatro certificações Microsoft e mestrado no PESC/COPPE/UFRJ">
   </picture>
@@ -26,6 +28,8 @@ Tenho quatro certificações Microsoft: Azure Administrator Associate (AZ-104), 
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/carreira-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/carreira-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/carreira.svg">
     <img src="assets/light/carreira.svg" width="840" alt="Linha do tempo: bacharelado em Engenharia de Software na UnB; intercâmbio na Auckland University of Technology, Nova Zelândia; empacotamento de sistemas para Red Hat no Software Público Brasileiro; pipelines de CI/CD para ambientes internos e externos; infraestrutura para grandes clientes; mestrado em Engenharia de Sistemas e Computação no PESC/COPPE/UFRJ; certificações Microsoft AZ-104, AZ-204, AZ-305 e AZ-400; foco atual em IA, DevOps e Kubernetes">
   </picture>
@@ -35,6 +39,8 @@ Tenho quatro certificações Microsoft: Azure Administrator Associate (AZ-104), 
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/clientes-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/clientes-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/clientes.svg">
     <img src="assets/light/clientes.svg" width="840" alt="Letreiro com os clientes atendidos: Icatu Seguros, Nubank, Odontoprev, CNseg, Movida, Carrefour, BMW, Inbenta, Caixa Capitalização, Prudential e Firjan">
   </picture>
@@ -71,6 +77,8 @@ A lista completa está no [Google Scholar](https://scholar.google.com/citations?
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/stack-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/stack-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/stack.svg">
     <img src="assets/light/stack.svg" width="840" alt="Stack. Cloud: Azure, AKS, Entra ID, Azure DevOps, Azure Functions e Container Apps. Infra e DevOps: Kubernetes, Traefik, ingress-nginx, CI/CD e IaC. Redes e segurança: FortiGate, Zero Trust e Tailscale. Automação: n8n, PowerShell e Microsoft Graph">
   </picture>
@@ -81,6 +89,8 @@ A lista completa está no [Google Scholar](https://scholar.google.com/citations?
 <div align="center">
   <a href="https://github.com/alessandrocaetanob/smooth-operator">
     <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/projeto-m.svg">
+      <source media="(max-width: 600px)" srcset="assets/light/projeto-m.svg">
       <source media="(prefers-color-scheme: dark)" srcset="assets/dark/projeto.svg">
       <img src="assets/light/projeto.svg" width="840" alt="Projeto Smooth Operator, abrir repositório">
     </picture>

@@ -290,9 +290,76 @@ const STACK = [
 
 const PROJ_CHIPS = ['RDP', 'SSH', 'VNC', 'RBAC', 'MFA / TOTP', 'OIDC / SAML', 'FILE TRANSFER'];
 
+// quebra o texto por palavra para caber em maxW
+function wrap(f, texto, size, ls, maxW) {
+  const linhas = [];
+  let atual = '';
+  for (const palavra of texto.split(' ')) {
+    const tentativa = atual ? `${atual} ${palavra}` : palavra;
+    if (atual && measure(f, tentativa, size, ls) > maxW) {
+      linhas.push(atual);
+      atual = palavra;
+    } else {
+      atual = tentativa;
+    }
+  }
+  if (atual) linhas.push(atual);
+  for (const l of linhas) check(`linha "${l}"`, measure(f, l, size, ls), maxW);
+  return linhas;
+}
+
 // ════════════════════════════════════════════════════════════════════════
 // header: ficha de operador
 // ════════════════════════════════════════════════════════════════════════
+const campos = (S) => [
+  ['SPECIALTY', S.specialty],
+  ['CLEARANCE', '4× MICROSOFT CERTIFIED'],
+  ['EDUCATION', S.education],
+  ['STATUS', null],
+];
+
+// campo da ficha: rótulo em mono e valor; STATUS ganha o indicador piscando
+function campo(d, th, S, label, valor, fx, fy, w) {
+  let g = `<line x1="${fx}" y1="${fy}" x2="${fx + w}" y2="${fy}" stroke="${th.line}" stroke-width="1"/>`;
+  g += `<rect x="${fx}" y="${fy + 8}" width="5" height="5" fill="${YELLOW}"/>`;
+  g += d.text({ x: fx + 12, y: fy + 14, f: 'c', size: 10, ls: 1.8, fill: th.muted }, label);
+  if (valor) {
+    check(label, measure('s', valor, 17, 0.8), w);
+    g += d.text({ x: fx, y: fy + 40, f: 's', size: 17, ls: 0.8, fill: th.ink }, valor);
+  } else {
+    g += `<circle cx="${fx + 5}" cy="${fy + 34}" r="4.5" fill="${th.cyan}"><animate attributeName="opacity" values="1;1;0.25;1" keyTimes="0;0.6;0.8;1" dur="1.6s" repeatCount="indefinite"/></circle>`;
+    g += d.text({ x: fx + 17, y: fy + 40, f: 's', size: 17, ls: 0.8, fill: th.ink }, [
+      { s: 'ONLINE' },
+      { s: `  // ${S.sla}`, f: 'c', fill: th.muted, size: 11 },
+    ]);
+  }
+  return g;
+}
+
+// emblema de mira desenhado em torno da origem (alcance de ~116px)
+function emblem(d, th) {
+  return `<line x1="-116" y1="0" x2="-66" y2="0" stroke="${th.muted}" stroke-width="1"/>
+    <line x1="66" y1="0" x2="116" y2="0" stroke="${th.muted}" stroke-width="1"/>
+    <line x1="0" y1="-108" x2="0" y2="-66" stroke="${th.muted}" stroke-width="1"/>
+    <line x1="0" y1="66" x2="0" y2="108" stroke="${th.muted}" stroke-width="1"/>
+    <circle cx="0" cy="0" r="94" fill="none" stroke="${th.muted}" stroke-width="1" stroke-dasharray="1.5 6.5">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="80" fill="none" stroke="${th.ink}" stroke-width="1.3" stroke-dasharray="96 10 30 10 150 10 40 10 80 67">
+      <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="40s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="80" fill="none" stroke="${YELLOW}" stroke-width="5" stroke-dasharray="64 439">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="58" fill="none" stroke="${th.line}" stroke-width="1"/>
+    <path d="${diamond(0, 0, 34)}" fill="${YELLOW}"/>
+    <path d="${diamond(0, 0, 42)}" fill="none" stroke="${th.ink}" stroke-width="1"/>
+    ${d.text({ x: 0, y: 7, f: 'h', size: 20, ls: 1.5, fill: ON_YELLOW, anchor: 'middle' }, 'ACB')}`;
+}
+
+// scanline amarela que varre o painel de tempos em tempos
+const scanline = (W, H) => `<g opacity="0.55"><rect x="2" y="-12" width="${W - 4}" height="2" fill="${YELLOW}"><animate attributeName="y" values="-12;${H + 4};${H + 4}" keyTimes="0;0.28;1" dur="9s" begin="0.2s" repeatCount="indefinite"/></rect></g>`;
+
 function header(th, lang) {
   const d = new Doc();
   const S = STR[lang];
@@ -306,8 +373,7 @@ function header(th, lang) {
 
   const top = strip(d, th, W, 'OPERATOR FILE', '// PERSONNEL RECORD');
   let body = panel(th, W, H);
-  body += `<g clip-path="url(#hdrClip)">${crossArea('hdrCross', 544, 64, W - 544, H - 64)}
-    <g opacity="0.55"><rect x="2" y="-12" width="${W - 4}" height="2" fill="${YELLOW}"><animate attributeName="y" values="-12;${H + 4};${H + 4}" keyTimes="0;0.28;1" dur="9s" begin="0.2s" repeatCount="indefinite"/></rect></g></g>`;
+  body += `<g clip-path="url(#hdrClip)">${crossArea('hdrCross', 544, 64, W - 544, H - 64)}${scanline(W, H)}</g>`;
   body += top.svg;
   body += barcode(640, 12, 84, 14, 'ACB-0001', th.muted);
   body += d.text({ x: W - 44, y: 23.5, f: 'cb', size: 10.5, ls: 1, fill: th.ink, anchor: 'end' }, 'ACB-0001');
@@ -318,52 +384,14 @@ function header(th, lang) {
   body += `<g><rect x="${X}" y="131.5" width="56" height="5" fill="${YELLOW}"/>${d.text({ x: 104, y: 141, f: 's', size: 19, ls: 2, fill: th.ink }, cargo)}${reveal(0.8, { dx: -12 })}</g>`;
 
   // campos
-  const fields = [
-    ['SPECIALTY', S.specialty],
-    ['CLEARANCE', '4× MICROSOFT CERTIFIED'],
-    ['EDUCATION', S.education],
-    ['STATUS', null],
-  ];
-  fields.forEach(([label, valor], i) => {
-    const fx = X + (i % 2) * 272;
-    const fy = 172 + Math.floor(i / 2) * 62;
-    let g = `<line x1="${fx}" y1="${fy}" x2="${fx + 250}" y2="${fy}" stroke="${th.line}" stroke-width="1"/>`;
-    g += `<rect x="${fx}" y="${fy + 8}" width="5" height="5" fill="${YELLOW}"/>`;
-    g += d.text({ x: fx + 12, y: fy + 14, f: 'c', size: 10, ls: 1.8, fill: th.muted }, label);
-    if (valor) {
-      check(label, measure('s', valor, 17, 0.8), 250);
-      g += d.text({ x: fx, y: fy + 40, f: 's', size: 17, ls: 0.8, fill: th.ink }, valor);
-    } else {
-      g += `<circle cx="${fx + 5}" cy="${fy + 34}" r="4.5" fill="${th.cyan}"><animate attributeName="opacity" values="1;1;0.25;1" keyTimes="0;0.6;0.8;1" dur="1.6s" repeatCount="indefinite"/></circle>`;
-      g += d.text({ x: fx + 17, y: fy + 40, f: 's', size: 17, ls: 0.8, fill: th.ink }, [
-        { s: 'ONLINE' },
-        { s: `  // ${S.sla}`, f: 'c', fill: th.muted, size: 11 },
-      ]);
-    }
+  campos(S).forEach(([label, valor], i) => {
+    const g = campo(d, th, S, label, valor, X + (i % 2) * 272, 172 + Math.floor(i / 2) * 62, 250);
     body += `<g>${g}${reveal(1.1 + i * 0.15, { dx: -14 })}</g>`;
   });
 
   // emblema de mira
   const cx = 700, cy = 166;
-  body += `<g>
-    <line x1="${cx - 116}" y1="${cy}" x2="${cx - 66}" y2="${cy}" stroke="${th.muted}" stroke-width="1"/>
-    <line x1="${cx + 66}" y1="${cy}" x2="${cx + 116}" y2="${cy}" stroke="${th.muted}" stroke-width="1"/>
-    <line x1="${cx}" y1="${cy - 108}" x2="${cx}" y2="${cy - 66}" stroke="${th.muted}" stroke-width="1"/>
-    <line x1="${cx}" y1="${cy + 66}" x2="${cx}" y2="${cy + 108}" stroke="${th.muted}" stroke-width="1"/>
-    <circle cx="${cx}" cy="${cy}" r="94" fill="none" stroke="${th.muted}" stroke-width="1" stroke-dasharray="1.5 6.5">
-      <animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="60s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="${cx}" cy="${cy}" r="80" fill="none" stroke="${th.ink}" stroke-width="1.3" stroke-dasharray="96 10 30 10 150 10 40 10 80 67">
-      <animateTransform attributeName="transform" type="rotate" from="360 ${cx} ${cy}" to="0 ${cx} ${cy}" dur="40s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="${cx}" cy="${cy}" r="80" fill="none" stroke="${YELLOW}" stroke-width="5" stroke-dasharray="64 439">
-      <animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="10s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="${cx}" cy="${cy}" r="58" fill="none" stroke="${th.line}" stroke-width="1"/>
-    <path d="${diamond(cx, cy, 34)}" fill="${YELLOW}"/>
-    <path d="${diamond(cx, cy, 42)}" fill="none" stroke="${th.ink}" stroke-width="1"/>
-    ${d.text({ x: cx, y: cy + 7, f: 'h', size: 20, ls: 1.5, fill: ON_YELLOW, anchor: 'middle' }, 'ACB')}
-  </g>`;
+  body += `<g transform="translate(${cx} ${cy})">${emblem(d, th)}</g>`;
 
   // barra de sincronização
   const sy = cy + 118;
@@ -381,6 +409,48 @@ function header(th, lang) {
   return d.svg({
     w: W, h: H, label: S.headerLabel, body,
     defs: `<clipPath id="hdrClip"><path d="${panelPath(W, H)}"/></clipPath>${crossDef('hdrCross', th)}${hazardDef('hdrHaz')}${wipeMask('nomeWipe', X - 2, 80, nomeW + 12, 52, 0.35)}`,
+  });
+}
+
+// versão estreita para celular: nome em duas linhas e campos em uma coluna
+function headerM(th, lang) {
+  const d = new Doc();
+  const S = STR[lang];
+  const W = 400, X = 18, FY = 204, PASSO = 58;
+  const H = FY + 4 * PASSO + 26;
+  const [l1, ...resto] = NAME.toUpperCase().split(' ');
+  const linhas = [l1, resto.join(' ')];
+  const cargo = ROLE.toUpperCase();
+
+  const nomeSize = Math.min(...linhas.map((l) => fit('h', l, 244, 40, 1)));
+  const nomeW = Math.max(...linhas.map((l) => measure('h', l, nomeSize, 1)));
+  check('cargo', X + 36 + measure('s', cargo, 15, 1.5), W - 18);
+
+  const top = strip(d, th, W, 'OPERATOR FILE', '');
+  let body = panel(th, W, H);
+  body += `<g clip-path="url(#hdrClip)">${crossArea('hdrCross', 256, 64, W - 256, 128)}${scanline(W, H)}</g>`;
+  body += top.svg;
+  body += d.text({ x: W - 36, y: 23.5, f: 'cb', size: 10.5, ls: 1, fill: th.ink, anchor: 'end' }, 'ACB-0001');
+
+  body += `<g>${d.text({ x: X, y: 76, f: 'c', size: 10, ls: 2, fill: th.muted }, 'NAME')}${reveal(0.2)}</g>`;
+  body += `<g mask="url(#nomeWipe)">${linhas.map((l, i) => d.text({ x: X, y: 114 + i * (nomeSize + 4), f: 'h', size: nomeSize, ls: 1, fill: th.ink }, l)).join('')}</g>`;
+  const cy = 128;
+  body += `<g transform="translate(${W - 70} ${cy}) scale(0.5)">${emblem(d, th)}</g>`;
+
+  const ry = 114 + nomeSize + 4 + 38;
+  body += `<g><rect x="${X}" y="${ry - 9}" width="26" height="4" fill="${YELLOW}"/>${d.text({ x: X + 36, y: ry, f: 's', size: 15, ls: 1.5, fill: th.ink }, cargo)}${reveal(0.8, { dx: -12 })}</g>`;
+
+  campos(S).forEach(([label, valor], i) => {
+    const g = campo(d, th, S, label, valor, X, FY + i * PASSO, W - 2 * X);
+    body += `<g>${g}${reveal(1.1 + i * 0.15, { dx: -14 })}</g>`;
+  });
+
+  body += `<rect x="${X}" y="${H - 16}" width="96" height="6" fill="url(#hdrHaz)"/>`;
+  body += bracketBR(W, H);
+
+  return d.svg({
+    w: W, h: H, label: S.headerLabel, body,
+    defs: `<clipPath id="hdrClip"><path d="${panelPath(W, H)}"/></clipPath>${crossDef('hdrCross', th)}${hazardDef('hdrHaz')}${wipeMask('nomeWipe', X - 2, 78, nomeW + 12, 2 * nomeSize + 16, 0.35)}`,
   });
 }
 
@@ -470,12 +540,69 @@ function carreira(th, lang) {
   return d.svg({ w: W, h: H, label: S.carreiraLabel, body, defs: hazardDef('carHaz') });
 }
 
+// versão estreita: cada entrada vira um bloco com título e organização quebrados
+function carreiraM(th, lang) {
+  const d = new Doc();
+  const S = STR[lang];
+  const W = 400, X = 16, RAIL = 26, TXT = 50, TW = W - TXT - 18;
+  const linhas = S.carreira;
+
+  const top = strip(d, th, W, 'OPERATION LOG', `// ${String(linhas.length).padStart(2, '0')} ENTRIES`);
+  let rows = '';
+  let y = 62;
+  const nos = [];
+  linhas.forEach(([cat, titulo, org, marco], i) => {
+    const atual = i === linhas.length - 1;
+    const tl = wrap('s', titulo, 16, 0.2, TW);
+    const ol = org ? wrap('m', org, 14.5, 0.2, TW) : [];
+    const h = 26 + tl.length * 20 + ol.length * 18 + 10;
+    const my = y + 14; // linha de metadados
+    let g = '';
+    if (atual) {
+      g += `<rect x="${TXT - 10}" y="${y + 1}" width="${W - 12 - (TXT - 10)}" height="${h - 6}" fill="${YELLOW}" opacity="${th.hlOp}"/>`;
+      g += `<rect x="${TXT - 10}" y="${y + 1}" width="3" height="${h - 6}" fill="${YELLOW}"/>`;
+    } else if (i < linhas.length - 1) {
+      g += `<line x1="${TXT}" y1="${y + h - 2}" x2="${W - 18}" y2="${y + h - 2}" stroke="${th.line}" stroke-width="1" stroke-dasharray="2 4"/>`;
+    }
+    if (atual) {
+      g += `<path d="${diamond(RAIL, my, 8)}" fill="none" stroke="${YELLOW}" stroke-width="1.5"><animate attributeName="d" values="${diamond(RAIL, my, 7)};${diamond(RAIL, my, 14)}" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0" dur="1.8s" repeatCount="indefinite"/></path>`;
+      g += `<path d="${diamond(RAIL, my, 7)}" fill="${YELLOW}" stroke="${th.ink}" stroke-width="1.5"/>`;
+    } else {
+      g += `<path d="${diamond(RAIL, my, 5.5)}" fill="${marco ? YELLOW : th.bg}" stroke="${th.ink}" stroke-width="1.5"/>`;
+    }
+    nos.push(my);
+
+    g += d.text({ x: TXT, y: my + 4, f: 'cb', size: 10.5, ls: 1, fill: th.muted }, String(i + 1).padStart(2, '0'));
+    g += `<rect x="${TXT + 26}" y="${my - 9}" width="52" height="18" fill="${atual ? YELLOW : th.bg2}"/>`;
+    g += d.text({ x: TXT + 52, y: my + 4, f: 'cb', size: 10, ls: 1, fill: atual ? ON_YELLOW : th.ink, anchor: 'middle' }, cat);
+    if (atual) g += d.text({ x: W - 22, y: my + 4, f: 'cb', size: 9.5, ls: 1.5, fill: th.ink, anchor: 'end' }, 'CURRENT');
+    let ty = y + 26 + 16;
+    for (const l of tl) { g += d.text({ x: TXT, y: ty, f: 's', size: 16, ls: 0.2, fill: th.ink }, l); ty += 20; }
+    for (const l of ol) { g += d.text({ x: TXT, y: ty - 1, f: 'm', size: 14.5, ls: 0.2, fill: th.muted }, l); ty += 18; }
+
+    rows += `<g>${g}${reveal(0.3 + i * 0.13, { dx: -10, dur: 0.4 })}</g>`;
+    y += h;
+  });
+  const H = y + 48;
+
+  const railLen = nos[nos.length - 1] - nos[0];
+  let body = panel(th, W, H) + top.svg;
+  body += `<line x1="${RAIL}" y1="${nos[0]}" x2="${RAIL}" y2="${nos[nos.length - 1]}" stroke="${th.line}" stroke-width="2" stroke-dasharray="${railLen}" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" values="${railLen};${railLen};0" keyTimes="0;0.2;1" dur="1.6s" fill="freeze"/></line>`;
+  body += rows;
+  body += d.text({ x: X, y: H - 16, f: 'c', size: 10, ls: 1.5, fill: th.muted }, '// END OF LOG');
+  body += `<rect x="${W - 150}" y="${H - 22}" width="90" height="6" fill="url(#carHaz)"/>`;
+  body += bracketBR(W, H);
+
+  return d.svg({ w: W, h: H, label: S.carreiraLabel, body, defs: hazardDef('carHaz') });
+}
+
 // ════════════════════════════════════════════════════════════════════════
 // clientes: letreiro infinito
 // ════════════════════════════════════════════════════════════════════════
-function clientes(th) {
+// W e LW (largura do bloco amarelo) mudam na versão de celular
+function clientes(th, { W = 840, LW = 150, LS_T = 2.4 } = {}) {
   const d = new Doc();
-  const W = 840, H = 76, LW = 150;
+  const H = 76;
   const FS = 15, LS = 1.2, PAD = 14, GAP = 26, chipH = 32, chipY = (H - chipH) / 2;
 
   let x = 0;
@@ -487,6 +614,7 @@ function clientes(th) {
     return c;
   });
   const W1 = x; // uma cópia completa, com o gap final: o loop fecha sem salto
+  check('rótulo dos clientes', 16 + measure('h', 'CONTRACT', 16, LS_T), LW - 8);
 
   const copia = chips.map((c) => `<path d="${cham(c.x, chipY, c.w, chipH, { tl: 7, br: 7 })}" fill="${th.bg2}"/><rect x="${n(c.x)}" y="${chipY + 7}" width="3" height="${chipH - 14}" fill="${YELLOW}"/>${d.text({ x: c.x + PAD + 4, y: chipY + 21.5, f: 's', size: FS, ls: LS, fill: th.ink }, c.up)}<path d="${diamond(c.x + c.w + GAP / 2, H / 2, 3)}" fill="${th.muted}"/>`).join('\n      ');
 
@@ -505,8 +633,8 @@ function clientes(th) {
     <rect x="${W - 50}" y="1.5" width="48.5" height="${H - 3}" fill="url(#fadeR)"/>
   </g>
   <path d="${cham(1.5, 1.5, LW, H - 3, { bl: 14 })}" fill="${YELLOW}"/>
-  ${d.text({ x: 16, y: 30, f: 'h', size: 16, ls: 2.4, fill: ON_YELLOW }, 'CONTRACT')}
-  ${d.text({ x: 16, y: 48, f: 'h', size: 16, ls: 2.4, fill: ON_YELLOW }, 'PARTNERS')}
+  ${d.text({ x: 16, y: 30, f: 'h', size: 16, ls: LS_T, fill: ON_YELLOW }, 'CONTRACT')}
+  ${d.text({ x: 16, y: 48, f: 'h', size: 16, ls: LS_T, fill: ON_YELLOW }, 'PARTNERS')}
   ${d.text({ x: 16, y: 64, f: 'cb', size: 9.5, ls: 1, fill: ON_YELLOW }, `${CLIENTES.length} ENTRIES`)}`;
 
   return d.svg({
@@ -559,44 +687,55 @@ function cert(th, c, i) {
 // ════════════════════════════════════════════════════════════════════════
 // stack: loadout em módulos
 // ════════════════════════════════════════════════════════════════════════
-function stack(th) {
+const MAX_ITENS = Math.max(...STACK.map(([, itens]) => itens.length));
+const modH = (n) => 64 + n * 24 + 34;
+const stackLabel = 'Stack: ' + STACK.map(([nome, itens]) => `${nome.toLowerCase()}: ${itens.join(', ')}`).join('; ') + '.';
+
+// um módulo do loadout (altura h), com o contador de slots no rodapé
+function modulo(d, th, i, x, y, MW, h) {
+  const [nome, itens] = STACK[i];
+  let g = `<path d="${cham(x, y, MW, h, { tr: 12 })}" fill="${th.bg2}"/>`;
+  g += d.text({ x: x + 12, y: y + 20, f: 'cb', size: 10, ls: 1.2, fill: th.muted }, `M-0${i + 1}`);
+  g += `<rect x="${x + MW - 30}" y="${y + 12}" width="6" height="6" fill="${YELLOW}"/>`;
+  const fs = fit('h', nome, MW - 24, 17, 1.4, 13);
+  g += d.text({ x: x + 12, y: y + 44, f: 'h', size: fs, ls: 1.4, fill: th.ink }, nome);
+  g += `<rect x="${x + 12}" y="${y + 52}" width="32" height="3" fill="${YELLOW}"/>`;
+  itens.forEach((item, j) => {
+    const iy = y + 80 + j * 24;
+    check(`stack "${item}"`, measure('m', item, 16, 0.3), MW - 40);
+    g += `<rect x="${x + 13}" y="${iy - 8}" width="5" height="5" fill="${th.ink}"/>`;
+    g += d.text({ x: x + 26, y: iy, f: 'm', size: 16, ls: 0.3, fill: th.ink }, item);
+  });
+  const sy = y + h - 16;
+  g += d.text({ x: x + 12, y: sy + 4, f: 'c', size: 9, ls: 1, fill: th.muted }, `SLOTS ${itens.length}/${MAX_ITENS}`);
+  for (let k = 0; k < MAX_ITENS; k++) {
+    const on = k < itens.length;
+    g += `<rect x="${x + MW - 12 - (MAX_ITENS - k) * 9}" y="${sy - 4}" width="6" height="8" fill="${on ? YELLOW : 'none'}" stroke="${on ? YELLOW : th.muted}" stroke-width="1"/>`;
+  }
+  return `<g>${g}${reveal(0.2 + i * 0.15, { dy: 10 })}</g>`;
+}
+
+// cols = 4 no desktop (uma linha) e 2 no celular (grade 2×2)
+function stack(th, { W = 840, cols = 4, M = 24, GAP = 12 } = {}) {
   const d = new Doc();
-  const W = 840, M = 24, GAP = 12, BY = 62;
-  const MW = (W - 2 * M - 3 * GAP) / 4;
-  const maxItens = Math.max(...STACK.map(([, itens]) => itens.length));
-  const BH = 64 + maxItens * 24 + 34;
-  const H = BY + BH + 26;
+  const BY = 62;
+  const MW = (W - 2 * M - (cols - 1) * GAP) / cols;
+  // cada linha de módulos tem a altura do módulo com mais itens nela
+  const alturas = [];
+  for (let r = 0; r * cols < STACK.length; r++) {
+    alturas.push(modH(Math.max(...STACK.slice(r * cols, (r + 1) * cols).map(([, itens]) => itens.length))));
+  }
+  const H = BY + alturas.reduce((a, b) => a + b, 0) + (alturas.length - 1) * GAP + 26;
 
   const top = strip(d, th, W, 'LOADOUT', `// TECH STACK · ${String(STACK.length).padStart(2, '0')} MODULES`);
   let body = panel(th, W, H) + top.svg;
-
-  STACK.forEach(([nome, itens], i) => {
-    const x = M + i * (MW + GAP);
-    let g = `<path d="${cham(x, BY, MW, BH, { tr: 12 })}" fill="${th.bg2}"/>`;
-    g += d.text({ x: x + 12, y: BY + 20, f: 'cb', size: 10, ls: 1.2, fill: th.muted }, `M-0${i + 1}`);
-    g += `<rect x="${x + MW - 30}" y="${BY + 12}" width="6" height="6" fill="${YELLOW}"/>`;
-    const fs = fit('h', nome, MW - 24, 17, 1.4, 13);
-    g += d.text({ x: x + 12, y: BY + 44, f: 'h', size: fs, ls: 1.4, fill: th.ink }, nome);
-    g += `<rect x="${x + 12}" y="${BY + 52}" width="32" height="3" fill="${YELLOW}"/>`;
-    itens.forEach((item, j) => {
-      const iy = BY + 80 + j * 24;
-      check(`stack "${item}"`, measure('m', item, 16, 0.3), MW - 40);
-      g += `<rect x="${x + 13}" y="${iy - 8}" width="5" height="5" fill="${th.ink}"/>`;
-      g += d.text({ x: x + 26, y: iy, f: 'm', size: 16, ls: 0.3, fill: th.ink }, item);
-    });
-    // contador de slots no rodapé do módulo
-    const sy = BY + BH - 16;
-    g += d.text({ x: x + 12, y: sy + 4, f: 'c', size: 9, ls: 1, fill: th.muted }, `SLOTS ${itens.length}/${maxItens}`);
-    for (let k = 0; k < maxItens; k++) {
-      const on = k < itens.length;
-      g += `<rect x="${x + MW - 12 - (maxItens - k) * 9}" y="${sy - 4}" width="6" height="8" fill="${on ? YELLOW : 'none'}" stroke="${on ? YELLOW : th.muted}" stroke-width="1"/>`;
-    }
-    body += `<g>${g}${reveal(0.2 + i * 0.15, { dy: 10 })}</g>`;
+  STACK.forEach((_, i) => {
+    const r = Math.floor(i / cols);
+    const y = BY + alturas.slice(0, r).reduce((a, b) => a + b + GAP, 0);
+    body += modulo(d, th, i, M + (i % cols) * (MW + GAP), y, MW, alturas[r]);
   });
   body += bracketBR(W, H);
-
-  const label = 'Stack: ' + STACK.map(([nome, itens]) => `${nome.toLowerCase()}: ${itens.join(', ')}`).join('; ') + '.';
-  return d.svg({ w: W, h: H, label, body });
+  return d.svg({ w: W, h: H, label: stackLabel, body });
 }
 
 // ════════════════════════════════════════════════════════════════════════
@@ -641,6 +780,50 @@ function projeto(th, lang) {
   });
 }
 
+// versão estreita: tagline e chips quebram linha, botão na largura toda
+function projetoM(th, lang) {
+  const d = new Doc();
+  const S = STR[lang];
+  const W = 400, X = 36, CW = W - X - 20;
+
+  const top = strip(d, th, W, 'ACTIVE PROJECT', '');
+  const tSize = fit('h', 'SMOOTH OPERATOR', CW, 40, 1.2);
+  const tw = measure('h', 'SMOOTH OPERATOR', tSize, 1.2);
+  let body = '';
+  body += `<g mask="url(#prjWipe)">${d.text({ x: X, y: 100, f: 'h', size: tSize, ls: 1.2, fill: th.ink }, 'SMOOTH OPERATOR')}</g>`;
+
+  let y = 128;
+  let tag = '';
+  for (const l of wrap('m', S.projeto, 16.5, 0.2, CW)) { tag += d.text({ x: X, y, f: 'm', size: 16.5, ls: 0.2, fill: th.ink }, l); y += 21; }
+  body += `<g>${tag}${reveal(0.7, { dx: -10 })}</g>`;
+
+  // chips em linhas
+  let cx = X;
+  let cy = y - 4;
+  PROJ_CHIPS.forEach((chip, i) => {
+    const w = measure('cb', chip, 10.5, 1) + 18;
+    if (cx + w > X + CW) { cx = X; cy += 30; }
+    body += `<g><path d="${cham(cx + 0.5, cy + 0.5, w - 1, 23, { tl: 5 })}" fill="${th.bg}" stroke="${th.frame}" stroke-width="1"/>${d.text({ x: cx + 9, y: cy + 16, f: 'cb', size: 10.5, ls: 1, fill: th.ink }, chip)}${reveal(1 + i * 0.08, { dy: 6, dur: 0.3 })}</g>`;
+    cx += w + 7;
+  });
+
+  const by = cy + 40, bh = 36;
+  body += `<path d="${cham(X, by, CW, bh, { tl: 10 })}" fill="${YELLOW}"/>`;
+  body += d.text({ x: X + 16, y: by + 23.5, f: 'h', size: 14.5, ls: 2, fill: ON_YELLOW }, 'VIEW REPOSITORY');
+  body += arrowNE(X + CW - 28, by + 12.5, 11, ON_YELLOW, 2.2);
+  const H = by + bh + 30;
+
+  const pre = panel(th, W, H) + top.svg
+    + barcode(W - 118, 12, 76, 14, 'smooth-operator', th.muted)
+    + `<rect x="16" y="62" width="7" height="${H - 62 - 22}" fill="url(#prjHaz)"/>`;
+  body = pre + body + bracketBR(W, H);
+
+  return d.svg({
+    w: W, h: H, label: S.projetoLabel, body,
+    defs: `${hazardDef('prjHaz')}${wipeMask('prjWipe', X - 2, 60, tw + 12, 50, 0.2)}`,
+  });
+}
+
 // ════════════════════════════════════════════════════════════════════════
 // divisor
 // ════════════════════════════════════════════════════════════════════════
@@ -665,9 +848,15 @@ const ASSETS = [
   ['header', header, true],
   ['carreira', carreira, true],
   ['projeto', projeto, true],
-  ['clientes', clientes],
-  ['stack', stack],
+  ['clientes', (th) => clientes(th)],
+  ['stack', (th) => stack(th)],
   ['divisor', divisor],
+  // versões de celular (400px), usadas via <source media="(max-width: 600px)">
+  ['header-m', headerM, true],
+  ['carreira-m', carreiraM, true],
+  ['projeto-m', projetoM, true],
+  ['clientes-m', (th) => clientes(th, { W: 400, LW: 112, LS_T: 1.6 })],
+  ['stack-m', (th) => stack(th, { W: 400, cols: 2, M: 16, GAP: 10 })],
   ['badge-email', (th) => badge(th, 'E-MAIL', 'email')],
   ['badge-linkedin', (th) => badge(th, 'LINKEDIN', 'linkedin')],
   ['badge-scholar', (th) => badge(th, 'GOOGLE SCHOLAR', 'scholar')],

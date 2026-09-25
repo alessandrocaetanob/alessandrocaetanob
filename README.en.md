@@ -2,6 +2,8 @@
   <sub><a href="README.md">PT-BR</a> · <b>English</b></sub>
   <br><br>
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/header-m-en.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/header-m-en.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/header-en.svg">
     <img src="assets/light/header-en.svg" width="840" alt="Operator file for Alessandro Caetano Beltrão, Cloud &amp; Infrastructure Engineer, specializing in AI, DevOps, Kubernetes and Azure, with four Microsoft certifications and an M.Sc. from PESC/COPPE/UFRJ">
   </picture>
@@ -26,6 +28,8 @@ I hold four Microsoft certifications: Azure Administrator Associate (AZ-104), Az
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/carreira-m-en.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/carreira-m-en.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/carreira-en.svg">
     <img src="assets/light/carreira-en.svg" width="840" alt="Timeline: B.Sc. in Software Engineering at the University of Brasília; exchange program at Auckland University of Technology, New Zealand; packaging systems for Red Hat at Brazilian Public Software; CI/CD pipelines for internal and external environments; infrastructure for large clients; M.Sc. in Systems Engineering and Computer Science at PESC/COPPE/UFRJ; Microsoft certifications AZ-104, AZ-204, AZ-305 and AZ-400; current focus on AI, DevOps and Kubernetes">
   </picture>
@@ -35,6 +39,8 @@ I hold four Microsoft certifications: Azure Administrator Associate (AZ-104), Az
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/clientes-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/clientes-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/clientes.svg">
     <img src="assets/light/clientes.svg" width="840" alt="Scrolling banner with clients: Icatu Seguros, Nubank, Odontoprev, CNseg, Movida, Carrefour, BMW, Inbenta, Caixa Capitalização, Prudential and Firjan">
   </picture>
@@ -69,6 +75,8 @@ The full list is on [Google Scholar](https://scholar.google.com/citations?user=j
 
 <div align="center">
   <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/stack-m.svg">
+    <source media="(max-width: 600px)" srcset="assets/light/stack-m.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/dark/stack.svg">
     <img src="assets/light/stack.svg" width="840" alt="Stack. Cloud: Azure, AKS, Entra ID, Azure DevOps, Azure Functions and Container Apps. Infra and DevOps: Kubernetes, Traefik, ingress-nginx, CI/CD and IaC. Network and security: FortiGate, Zero Trust and Tailscale. Automation: n8n, PowerShell and Microsoft Graph">
   </picture>
@@ -79,6 +87,8 @@ The full list is on [Google Scholar](https://scholar.google.com/citations?user=j
 <div align="center">
   <a href="https://github.com/alessandrocaetanob/smooth-operator">
     <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/projeto-m-en.svg">
+      <source media="(max-width: 600px)" srcset="assets/light/projeto-m-en.svg">
       <source media="(prefers-color-scheme: dark)" srcset="assets/dark/projeto-en.svg">
       <img src="assets/light/projeto-en.svg" width="840" alt="Smooth Operator project, open repository">
     </picture>
