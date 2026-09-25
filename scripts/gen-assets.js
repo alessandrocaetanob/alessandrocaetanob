@@ -8,13 +8,14 @@
 //
 // As fontes (Barlow Condensed e JetBrains Mono, ambas OFL, em scripts/fonts)
 // vão embutidas em cada SVG, porque SVG carregado via <img> não baixa fonte
-// externa. Com o pyftsubset (pip install fonttools brotli) cada arquivo leva
-// só os glifos que usa; sem ele, leva o subset latin inteiro de cada fonte.
+// externa. Com um python3 que tenha fonttools e brotli (pip install fonttools
+// brotli) cada arquivo leva só os glifos que usa; sem ele, leva o subset latin
+// inteiro de cada fonte.
 
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const { spawnSync } = require('child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 
 const OUT = path.resolve(process.argv[2] || path.join(__dirname, '..', 'assets'));
 const FONT_DIR = path.join(__dirname, 'fonts');
@@ -47,22 +48,25 @@ const FONTS = {
   cb: { file: 'jetbrains-mono-latin-700-normal', fam: 'efcb', w: 700, stack: MONO },
 };
 
-const HAS_SUBSET = spawnSync('pyftsubset', ['--help'], { stdio: 'ignore' }).status === 0;
-if (!HAS_SUBSET) console.warn('aviso: pyftsubset não encontrado, embutindo o subset latin inteiro');
+// python3 com fonttools para o subset, procurado em caminhos absolutos fixos
+// (sem depender do PATH)
+const PYTHON = ['/usr/bin/python3', '/usr/local/bin/python3', '/opt/homebrew/bin/python3']
+  .find((p) => fs.existsSync(p) && spawnSync(p, ['-c', 'import fontTools.subset, brotli'], { stdio: 'ignore' }).status === 0);
+if (!PYTHON) console.warn('aviso: python3 com fonttools e brotli não encontrado, embutindo o subset latin inteiro');
 const subsetCache = new Map();
 
 function fontData(file, chars) {
   const src = path.join(FONT_DIR, `${file}.woff2`);
-  if (!HAS_SUBSET) return fs.readFileSync(src).toString('base64');
-  const text = [...new Set(chars + ' ')].sort().join('');
+  if (!PYTHON) return fs.readFileSync(src).toString('base64');
+  const text = [...new Set(chars + ' ')].sort((a, b) => a.codePointAt(0) - b.codePointAt(0)).join('');
   const key = `${file}|${text}`;
   if (subsetCache.has(key)) return subsetCache.get(key);
   const tmp = path.join(os.tmpdir(), `efsub-${process.pid}-${subsetCache.size}.woff2`);
-  const r = spawnSync('pyftsubset', [
-    src, `--text=${text}`, '--flavor=woff2', `--output-file=${tmp}`,
+  const r = spawnSync(PYTHON, [
+    '-m', 'fontTools.subset', src, `--text=${text}`, '--flavor=woff2', `--output-file=${tmp}`,
     '--layout-features=kern',
   ], { encoding: 'utf8' });
-  if (r.status !== 0) throw new Error(`pyftsubset falhou para ${file}: ${r.stderr}`);
+  if (r.status !== 0) throw new Error(`fontTools.subset falhou para ${file}: ${r.stderr}`);
   const b64 = fs.readFileSync(tmp).toString('base64');
   fs.unlinkSync(tmp);
   subsetCache.set(key, b64);
@@ -93,7 +97,7 @@ function check(what, w, max) {
   if (w > max) throw new Error(`${what} estoura: ${w.toFixed(1)} > ${max}`);
 }
 
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const esc = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const n = (v) => +(+v).toFixed(2);
 
 // documento SVG: registra os glifos usados por fonte para o subset
@@ -158,7 +162,7 @@ const arrowNE = (x, y, s, cor, sw = 1.8) =>
 // código de barras decorativo, determinístico pela semente
 function barcode(x, y, w, h, seed, fill) {
   let hsh = 2166136261;
-  for (const ch of seed) hsh = Math.imul(hsh ^ ch.charCodeAt(0), 16777619);
+  for (const ch of seed) hsh = Math.imul(hsh ^ ch.codePointAt(0), 16777619);
   const rnd = () => { hsh ^= hsh << 13; hsh ^= hsh >>> 17; hsh ^= hsh << 5; return (hsh >>> 0) / 4294967296; };
   let cx = x;
   let out = '';
@@ -319,7 +323,7 @@ const campos = (S) => [
 ];
 
 // campo da ficha: rótulo em mono e valor; STATUS ganha o indicador piscando
-function campo(d, th, S, label, valor, fx, fy, w) {
+function campo(d, th, S, { label, valor, x: fx, y: fy, w }) {
   let g = `<line x1="${fx}" y1="${fy}" x2="${fx + w}" y2="${fy}" stroke="${th.line}" stroke-width="1"/>`;
   g += `<rect x="${fx}" y="${fy + 8}" width="5" height="5" fill="${YELLOW}"/>`;
   g += d.text({ x: fx + 12, y: fy + 14, f: 'c', size: 10, ls: 1.8, fill: th.muted }, label);
@@ -385,7 +389,7 @@ function header(th, lang) {
 
   // campos
   campos(S).forEach(([label, valor], i) => {
-    const g = campo(d, th, S, label, valor, X + (i % 2) * 272, 172 + Math.floor(i / 2) * 62, 250);
+    const g = campo(d, th, S, { label, valor, x: X + (i % 2) * 272, y: 172 + Math.floor(i / 2) * 62, w: 250 });
     body += `<g>${g}${reveal(1.1 + i * 0.15, { dx: -14 })}</g>`;
   });
 
@@ -441,7 +445,7 @@ function headerM(th, lang) {
   body += `<g><rect x="${X}" y="${ry - 9}" width="26" height="4" fill="${YELLOW}"/>${d.text({ x: X + 36, y: ry, f: 's', size: 15, ls: 1.5, fill: th.ink }, cargo)}${reveal(0.8, { dx: -12 })}</g>`;
 
   campos(S).forEach(([label, valor], i) => {
-    const g = campo(d, th, S, label, valor, X, FY + i * PASSO, W - 2 * X);
+    const g = campo(d, th, S, { label, valor, x: X, y: FY + i * PASSO, w: W - 2 * X });
     body += `<g>${g}${reveal(1.1 + i * 0.15, { dx: -14 })}</g>`;
   });
 
@@ -585,9 +589,9 @@ function carreiraM(th, lang) {
   });
   const H = y + 48;
 
-  const railLen = nos[nos.length - 1] - nos[0];
+  const railLen = nos.at(-1) - nos[0];
   let body = panel(th, W, H) + top.svg;
-  body += `<line x1="${RAIL}" y1="${nos[0]}" x2="${RAIL}" y2="${nos[nos.length - 1]}" stroke="${th.line}" stroke-width="2" stroke-dasharray="${railLen}" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" values="${railLen};${railLen};0" keyTimes="0;0.2;1" dur="1.6s" fill="freeze"/></line>`;
+  body += `<line x1="${RAIL}" y1="${nos[0]}" x2="${RAIL}" y2="${nos.at(-1)}" stroke="${th.line}" stroke-width="2" stroke-dasharray="${railLen}" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" values="${railLen};${railLen};0" keyTimes="0;0.2;1" dur="1.6s" fill="freeze"/></line>`;
   body += rows;
   body += d.text({ x: X, y: H - 16, f: 'c', size: 10, ls: 1.5, fill: th.muted }, '// END OF LOG');
   body += `<rect x="${W - 150}" y="${H - 22}" width="90" height="6" fill="url(#carHaz)"/>`;
@@ -619,7 +623,9 @@ function clientes(th, { W = 840, LW = 150, LS_T = 2.4 } = {}) {
   const copia = chips.map((c) => `<path d="${cham(c.x, chipY, c.w, chipH, { tl: 7, br: 7 })}" fill="${th.bg2}"/><rect x="${n(c.x)}" y="${chipY + 7}" width="3" height="${chipH - 14}" fill="${YELLOW}"/>${d.text({ x: c.x + PAD + 4, y: chipY + 21.5, f: 's', size: FS, ls: LS, fill: th.ink }, c.up)}<path d="${diamond(c.x + c.w + GAP / 2, H / 2, 3)}" fill="${th.muted}"/>`).join('\n      ');
 
   const dur = Math.round(W1 / 34);
-  const body = `  ${`<path d="${cham(1.5, 1.5, W - 3, H - 3, { tr: 14, bl: 14 })}" fill="${th.bg}" stroke="${th.frame}" stroke-width="1.5"/>`}
+  const moldura = `<path d="${cham(1.5, 1.5, W - 3, H - 3, { tr: 14, bl: 14 })}" fill="${th.bg}" stroke="${th.frame}" stroke-width="1.5"/>`;
+  const entradas = CLIENTES.length + ' ENTRIES';
+  const body = `  ${moldura}
   <g clip-path="url(#cliClip)">
     <g transform="translate(${LW + 18} 0)">
       <g class="fila">
@@ -635,7 +641,7 @@ function clientes(th, { W = 840, LW = 150, LS_T = 2.4 } = {}) {
   <path d="${cham(1.5, 1.5, LW, H - 3, { bl: 14 })}" fill="${YELLOW}"/>
   ${d.text({ x: 16, y: 30, f: 'h', size: 16, ls: LS_T, fill: ON_YELLOW }, 'CONTRACT')}
   ${d.text({ x: 16, y: 48, f: 'h', size: 16, ls: LS_T, fill: ON_YELLOW }, 'PARTNERS')}
-  ${d.text({ x: 16, y: 64, f: 'cb', size: 9.5, ls: 1, fill: ON_YELLOW }, `${CLIENTES.length} ENTRIES`)}`;
+  ${d.text({ x: 16, y: 64, f: 'cb', size: 9.5, ls: 1, fill: ON_YELLOW }, entradas)}`;
 
   return d.svg({
     w: W, h: H, label: `Clientes: ${CLIENTES.join(', ')}.`, body,
