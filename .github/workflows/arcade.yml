@@ -21,6 +21,17 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
 
+      # troca a rampa verde do GitHub por tons de cinza da paleta do perfil;
+      # o Pac-Man fica no amarelo de destaque
+      - name: Recolorir na paleta do perfil
+        run: |
+          sed -i -e 's/#ebedf0/#E4E4E0/gI' -e 's/#9be9a8/#C9C9C4/gI' -e 's/#40c463/#8E8E88/gI' \
+                 -e 's/#30a14e/#4A4A46/gI' -e 's/#216e39/#111111/gI' -e 's/\byellow\b/#FFE600/g' \
+                 dist/pacman-contribution-graph.svg
+          sed -i -e 's/#161b22/#18181B/gI' -e 's/#0e4429/#34343A/gI' -e 's/#006d32/#5E5E66/gI' \
+                 -e 's/#26a641/#A0A0A8/gI' -e 's/#39d353/#F0F0F0/gI' -e 's/\byellow\b/#FFE600/g' \
+                 dist/pacman-contribution-graph-dark.svg
+
       - name: Publicar na branch output
         uses: crazy-max/ghaction-github-pages@v4
         with:
