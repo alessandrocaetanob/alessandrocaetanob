@@ -1,0 +1,108 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Alessandro Caetano Beltrão",
+    "label": "Cloud & Infrastructure Engineer",
+    "email": "alessandro@hyperius.io",
+    "url": "https://github.com/alessandrocaetanob",
+    "summary": "Cloud and infrastructure engineer working mostly with Microsoft Azure (AKS, Entra ID, Azure DevOps, Functions), Kubernetes, CI/CD pipelines and infrastructure as code. Managed infrastructure for clients such as Nubank, Carrefour, BMW, Prudential and Icatu Seguros. Current focus: AI and DevOps. Four Microsoft certifications, M.Sc. from PESC (COPPE/UFRJ).",
+    "profiles": [
+      { "network": "GitHub", "username": "alessandrocaetanob", "url": "https://github.com/alessandrocaetanob" },
+      { "network": "LinkedIn", "username": "alessandrocb", "url": "https://www.linkedin.com/in/alessandrocb" },
+      { "network": "Google Scholar", "url": "https://scholar.google.com/citations?user=j656kewAAAAJ" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Software Público Brasileiro (UnB)",
+      "position": "Software packaging",
+      "summary": "Packaged systems from the Brazilian Public Software portal for Red Hat."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidade de Brasília (UnB)",
+      "area": "Software Engineering",
+      "studyType": "Bachelor"
+    },
+    {
+      "institution": "Auckland University of Technology",
+      "area": "Exchange program",
+      "studyType": "Exchange"
+    },
+    {
+      "institution": "PESC, COPPE, Universidade Federal do Rio de Janeiro (UFRJ)",
+      "area": "Systems Engineering and Computer Science",
+      "studyType": "Master",
+      "endDate": "2022"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Microsoft Certified: Azure Administrator Associate (AZ-104)",
+      "issuer": "Microsoft",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/AlessandroCaetano-3389/131BC0E6E9B2EE6A?sharingId=110FFD27C5CD10EE"
+    },
+    {
+      "name": "Microsoft Certified: Azure Developer Associate (AZ-204)",
+      "issuer": "Microsoft",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/AlessandroCaetano-3389/6442168655E07091?sharingId=110FFD27C5CD10EE"
+    },
+    {
+      "name": "Microsoft Certified: Azure Solutions Architect Expert (AZ-305)",
+      "issuer": "Microsoft",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/AlessandroCaetano-3389/CB9B1B55C95165EC?sharingId=110FFD27C5CD10EE"
+    },
+    {
+      "name": "Microsoft Certified: DevOps Engineer Expert (AZ-400)",
+      "issuer": "Microsoft",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/AlessandroCaetano-3389/88C998348DF2BF26?sharingId=110FFD27C5CD10EE"
+    }
+  ],
+  "publications": [
+    {
+      "name": "A Low-Cost Continuous Development Architecture Based on Container Orchestration",
+      "publisher": "PESC (COPPE/UFRJ), M.Sc. dissertation",
+      "releaseDate": "2022",
+      "url": "https://pesc.coppe.ufrj.br/uploadfile/publicacao/3072.pdf"
+    },
+    {
+      "name": "Performance Evaluation of Kubernetes as Deployment Platform for IoT Devices",
+      "publisher": "CIbSE",
+      "releaseDate": "2020",
+      "url": "https://web.archive.org/web/20240415192433/https://cibse2020.ppgia.pucpr.br/images/artigos/3/S03_P2.pdf"
+    },
+    {
+      "name": "Technical Debt: A Clean Architecture Implementation",
+      "publisher": "CBSoft",
+      "releaseDate": "2020",
+      "url": "https://sol.sbc.org.br/index.php/cbsoft_estendido/article/view/14620"
+    },
+    {
+      "name": "On the Benefits and Challenges of Using Kanban in Software Engineering: a Structured Synthesis Study",
+      "publisher": "Journal of Software Engineering Research and Development (JSERD)",
+      "releaseDate": "2018",
+      "url": "https://link.springer.com/article/10.1186/s40411-018-0057-1"
+    },
+    {
+      "name": "Using PageRank to Reveal Relevant Issues to Support Decision-Making on Open Source Projects",
+      "publisher": "OSS 2018, IFIP",
+      "releaseDate": "2018",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-319-92375-8_9"
+    }
+  ],
+  "skills": [
+    { "name": "Cloud", "keywords": ["Microsoft Azure", "AKS", "Entra ID", "Azure DevOps", "Azure Functions", "Azure Container Apps"] },
+    { "name": "Infrastructure and DevOps", "keywords": ["Kubernetes", "Traefik", "ingress-nginx", "CI/CD", "Infrastructure as Code"] },
+    { "name": "Network and security", "keywords": ["FortiGate", "Zero Trust", "Tailscale"] },
+    { "name": "Automation", "keywords": ["n8n", "PowerShell", "Microsoft Graph"] }
+  ],
+  "projects": [
+    {
+      "name": "Smooth Operator",
+      "description": "Cloud-native vault for remote access (RDP, SSH and VNC) that runs in the browser with no client to install, with RBAC, TOTP MFA, OIDC/SAML and file transfer during the session.",
+      "url": "https://github.com/alessandrocaetanob/smooth-operator",
+      "keywords": ["RDP", "SSH", "VNC", "RBAC", "MFA", "OIDC", "SAML"]
+    }
+  ]
+}
